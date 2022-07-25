@@ -1,0 +1,6 @@
+# Editor directories and files
+.idea/
+
+# Project exclude paths
+/backend/node_modules/
+/frontend/node_modules/
