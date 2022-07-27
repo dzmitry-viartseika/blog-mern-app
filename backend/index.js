@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import {loginValidation, registerValidation} from './validations/auth-validation.js';
-import { UserController } from './controllers/index.js'
+import { UserController, PostController } from './controllers/index.js'
 import AuthMiddleware from './middlewares/Auth/auth-middleware.js';
 
 dotenv.config();
@@ -14,10 +14,16 @@ mongoose
 
 const app = express();
 app.use(express.json());
-
+// AUTH
 app.post('/auth/login',  loginValidation, UserController.login);
 app.post('/auth/register', registerValidation, UserController.register);
 app.get('/auth/me', AuthMiddleware, UserController.getMe);
+// POST
+app.post('/posts/create', PostController.create);
+// app.delete('/posts/:id')
+// app.patch('/posts/update')
+// app.get('/posts/:id')
+// app.get('/posts')
 
 app.listen(process.env.PORT, (err) => {
     if (err) {
