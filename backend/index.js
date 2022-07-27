@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import {loginValidation, registerValidation} from './validations/auth-validation.js';
 import { UserController, PostController } from './controllers/index.js'
 import AuthMiddleware from './middlewares/Auth/auth-middleware.js';
+import { postCreateValidation } from './validations/post-validation.js';
 
 dotenv.config();
 
@@ -19,11 +20,11 @@ app.post('/auth/login',  loginValidation, UserController.login);
 app.post('/auth/register', registerValidation, UserController.register);
 app.get('/auth/me', AuthMiddleware, UserController.getMe);
 // POST
-app.post('/posts/create', PostController.create);
-// app.delete('/posts/:id')
-// app.patch('/posts/update')
-// app.get('/posts/:id')
-// app.get('/posts')
+app.post('/posts/', AuthMiddleware, postCreateValidation, PostController.create);
+app.delete('/posts/:id', AuthMiddleware, PostController.remove);
+app.patch('/posts/:id', AuthMiddleware, PostController.update);
+app.get('/posts/:id', AuthMiddleware, PostController.getOne);
+app.get('/posts', AuthMiddleware, PostController.getAll);
 
 app.listen(process.env.PORT, (err) => {
     if (err) {

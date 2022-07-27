@@ -16,7 +16,6 @@ export const register = async (req, res) => {
             passwordHash: hash,
         });
 
-        console.log('doc', doc)
         const user = await doc.save();
 
         const token = jwt.sign(
