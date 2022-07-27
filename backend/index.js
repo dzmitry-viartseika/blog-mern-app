@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import { registerValidation } from './validations/auth-validation.js';
+import {loginValidation, registerValidation} from './validations/auth-validation.js';
 import { UserController } from './controllers/index.js'
 import AuthMiddleware from './middlewares/Auth/auth-middleware.js';
 
@@ -10,13 +10,13 @@ dotenv.config();
 mongoose
     .connect(process.env.DB_URL)
     .then(() => {console.log('DB is OK')})
-    .catch((err) => {console.log('err')})
+    .catch((err) => {console.log('err', err)})
 
 const app = express();
 app.use(express.json());
 
-app.post('/auth/login', registerValidation, UserController.login);
-app.post('/auth/register', UserController.register);
+app.post('/auth/login',  loginValidation, UserController.login);
+app.post('/auth/register', registerValidation, UserController.register);
 app.get('/auth/me', AuthMiddleware, UserController.getMe);
 
 app.listen(process.env.PORT, (err) => {
