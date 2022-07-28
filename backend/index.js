@@ -37,12 +37,15 @@ app.use(express.json());
 app.post('/auth/login', loginValidation, validationResult, UserController.login);
 app.post('/auth/register', registerValidation, validationResult, UserController.register);
 app.get('/auth/me', AuthMiddleware, UserController.getMe);
-// POST
+// POSTS
 app.post('/posts/', AuthMiddleware, postCreateValidation, validationResult, PostController.create);
 app.delete('/posts/:id', AuthMiddleware, PostController.remove);
 app.patch('/posts/:id', AuthMiddleware, validationResult, PostController.update);
-app.get('/posts/:id', AuthMiddleware, PostController.getOne);
-app.get('/posts', AuthMiddleware, PostController.getAll);
+app.get('/posts/:id', PostController.getOne);
+app.get('/posts', PostController.getAll);
+
+// TAGS
+app.get('/tags', PostController.getLastTags);
 
 // FILES
 app.post('/upload', AuthMiddleware, upload.single('image'), (req, res) => {
