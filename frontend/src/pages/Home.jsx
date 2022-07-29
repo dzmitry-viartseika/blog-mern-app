@@ -12,8 +12,10 @@ import {useDispatch, useSelector} from "react-redux";
 export const Home = () => {
     const dispatch = useDispatch();
     const { posts, tags } = useSelector((state) => state.posts);
+    const currentUserData = useSelector((state) => state.user.data);
     const isPostsLoading = posts.status === 'loading';
     const isTagsLoading = tags.status === 'loading';
+
     useEffect(() => {
         dispatch(fetchPosts());
         dispatch(fetchTags());
@@ -32,7 +34,7 @@ export const Home = () => {
             <Post
               _id={post._id}
               title={post.title}
-              imageUrl={post.imageUrl}
+              imageUrl={`${process.env.REACT_APP_URL}${post.imageUrl}`}
               user={{
                 avatarUrl: post.user.avatarUrl,
                 fullName: post.user.fullName,
@@ -41,7 +43,7 @@ export const Home = () => {
               viewsCount={post.viewsCount}
               commentsCount={3}
               tags={post.tags}
-              isEditable
+              isEditable={currentUserData?._id === post.user._id}
             />
           ))}
         </Grid>

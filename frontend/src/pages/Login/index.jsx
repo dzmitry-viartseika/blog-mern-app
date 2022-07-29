@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { useForm } from 'react-hook-form';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { fetchAuth, selectIsAuth } from '../../redux/slices/auth-slice';
 import { useSelector, useDispatch } from "react-redux";
 
