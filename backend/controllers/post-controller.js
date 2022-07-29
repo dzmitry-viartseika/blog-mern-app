@@ -110,6 +110,8 @@ export const remove = async (req, res) => {
 export const update = async (req, res) => {
     try {
         const postId = req.params.id;
+        const post = await PostModel.find({_id: postId});
+
         await PostModel.updateOne(
             {
                 _id: postId,

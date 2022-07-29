@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
@@ -83,6 +83,23 @@ export const AddPost = () => {
             alert('Ошибка при создании статьи!');
         }
     };
+
+    useEffect(() => {
+        if (id) {
+            axios
+                .get(`/posts/${id}`)
+                .then(({ data }) => {
+                    setTitle(data.title);
+                    setText(data.text);
+                    setImageUrl(data.imageUrl);
+                    setTags(data.tags.join(','));
+                })
+                .catch((err) => {
+                    console.warn(err);
+                    alert('Ошибка при получении статьи!');
+                });
+        }
+    }, []);
 
     if (!window.localStorage.getItem('token') && !isAuth) {
         navigate('/');
