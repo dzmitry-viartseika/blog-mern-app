@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { useForm } from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { fetchAuth, selectIsAuth } from '../../redux/slices/auth-slice';
 import { useSelector, useDispatch } from "react-redux";
 
@@ -13,10 +13,11 @@ import styles from "./Login.module.scss";
 export const Login = () => {
     const isAuth = useSelector(selectIsAuth);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const onSubmit = async (values) => {
         const data = await dispatch(fetchAuth(values));
-
+        console.log('data', data);
         if (!data.payload) {
             return alert('Не удалось авторизоваться!');
         }
@@ -32,14 +33,14 @@ export const Login = () => {
         formState: { errors, isValid },
     } = useForm({
         defaultValues: {
-            email: 'test@test.ru',
-            password: '123',
+            email: 'wertey@gmail.com',
+            password: 'werte',
         },
         mode: 'onChange',
     });
 
     if (isAuth) {
-        return <NavLink to="/" />;
+        navigate('/');
     }
 
   return (

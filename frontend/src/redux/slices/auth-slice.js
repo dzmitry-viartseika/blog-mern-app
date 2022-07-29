@@ -17,59 +17,59 @@ export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async () => {
 });
 
 const initialState = {
-    user: null,
+    data: {},
     status: 'loading',
 };
 
 const authSlice = createSlice({
-    name: 'auth',
+    name: 'user',
     initialState,
     reducers: {
         logout: (state) => {
-            state.user = null;
+            state.data = null;
         },
     },
     extraReducers: {
         [fetchAuth.pending]: (state) => {
             state.status = 'loading';
-            state.user = null;
+            state.data = null;
         },
         [fetchAuth.fulfilled]: (state, action) => {
             state.status = 'loaded';
-            state.user = action.payload;
+            state.data = action.payload;
         },
         [fetchAuth.rejected]: (state) => {
             state.status = 'error';
-            state.user = null;
+            state.data = null;
         },
         [fetchAuthMe.pending]: (state) => {
             state.status = 'loading';
-            state.user = null;
+            state.data = null;
         },
         [fetchAuthMe.fulfilled]: (state, action) => {
             state.status = 'loaded';
-            state.user = action.payload;
+            state.data = action.payload;
         },
         [fetchAuthMe.rejected]: (state) => {
             state.status = 'error';
-            state.user = null;
+            state.data = null;
         },
         [fetchRegister.pending]: (state) => {
             state.status = 'loading';
-            state.user = null;
+            state.data = null;
         },
         [fetchRegister.fulfilled]: (state, action) => {
             state.status = 'loaded';
-            state.user = action.payload;
+            state.data = action.payload;
         },
         [fetchRegister.rejected]: (state) => {
             state.status = 'error';
-            state.user = null;
+            state.data = null;
         },
     },
 });
 
-export const selectIsAuth = (state) => Boolean(state.auth);
+export const selectIsAuth = (state) => Boolean(state.user.data);
 
 export const authReducer = authSlice.reducer;
 
