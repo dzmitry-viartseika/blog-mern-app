@@ -54,7 +54,7 @@ app.post('/upload', AuthMiddleware, upload.single('image'), (req, res) => {
     });
 });
 
-app.listen(process.env.PORT, (err) => {
+app.listen(process.env.PORT || 4000, (err) => {
     if (err) {
         return console.log(err);
     }
